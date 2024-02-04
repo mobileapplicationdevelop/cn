@@ -1,0 +1,55 @@
+import socket
+
+def main():
+    sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    sock.connect(("127.0.0.1", 4000))
+
+    # Reading the file name from the keyboard
+    fname = input("Enter the file name: ")
+
+    # Sending the file name to the server
+    sock.send(fname.encode())
+
+    # Receiving the contents from the server
+    data = sock.recv(1024).decode()
+
+    print(data)
+
+    sock.close()
+
+if __name__ == "__main__":
+    main()
+
+
+
+import socket
+
+def main():
+    # Establishing the connection with the server
+    sersock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    sersock.bind(("127.0.0.1", 4000))
+    sersock.listen(1)
+
+    print("Server ready for connection")
+
+    sock, addr = sersock.accept()  # Accepting client connection
+    print("Connection is successful and waiting for client request")
+
+    # Reading the file name from the client
+    fname = sock.recv(1024).decode()
+
+    # Reading file contents
+    with open(fname, "r") as file:
+        content = file.read()
+
+    # Sending contents to the client
+    sock.send(content.encode())
+
+    sock.close()
+    sersock.close()
+
+if __name__ == "__main__":
+    main()
+
+
+
