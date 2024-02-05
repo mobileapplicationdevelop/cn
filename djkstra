@@ -22,7 +22,7 @@ def dijkstra(graph,s):
         for v in range(total_vertex):
             if sp_set[v]==False and graph[u][v]!=-1 and distance[u]!=sys.maxsize and distance[u]+graph[u][v]<distance[v]:
                 distance[v]=distance[u]+graph[u][v]
-    print_sloution(distance,total_vertex)
+    print_solution(distance,total_vertex)
 graph=[[1,2,3,4,5,6,-1,5,4,3],
       [-1,-4,3,3,5,6,4,4,4,3],
        [-2,-1,4,5,3,6,7,6,5,1],
