@@ -1,0 +1,27 @@
+import socket
+import sys
+
+def main():
+    print("enter file name:")
+    filename = input().strip()
+    
+    with socket.socket(socket.AF_INET,socket.SOCK_STREAM) as sersock:
+        sersock.bind(('localhost',4000))
+        sersock.listen()
+        
+        print("server reaady for connection")
+        
+        with sersock.accept() as (sock,addr), sock.makefile('r') as file_read:
+            print(f"Connection is successful and waiting for client requesst from {addr}")
+            
+            file_read.readline()
+            
+            try:
+                with open(filename,'r') as content_read, sock.makefile('w') as pwrite:
+                    for line in content_read:
+                        pwrite.write(line)
+            except FileNotFoundError:
+                print(f"Error: File '{filename}' not found.")
+                
+if __name__ == "__main__":
+    main()
